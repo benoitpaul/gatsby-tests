@@ -1,35 +1,3 @@
-# How to create foreign keys with MDX sources
-
-## Create 2 content sources
-
-- posts
-- persons
-
-A post can link to multiple persons, via the authors field
-
-```gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-source-filesystem`,
-    options: {
-      name: `posts`,
-      path: `${__dirname}/content/posts`,
-    },
-  },
-  {
-    resolve: `gatsby-source-filesystem`,
-    options: {
-      name: `persons`,
-      path: `${__dirname}/content/persons`,
-    },
-  },
-  `gatsby-plugin-mdx`,
-],
-```
-
-## Create custom scheme types in gatsby-node.js
-
-```gatsby-node.js
 exports.createSchemaCustomization = ({ actions, schema }) => {
   const { createTypes } = actions;
 
@@ -88,11 +56,7 @@ exports.createSchemaCustomization = ({ actions, schema }) => {
     }),
   ]);
 };
-```
 
-## Create custom nodes in gatsby-node.js
-
-```gatsby-node.js
 exports.onCreateNode = ({ node, getNode, actions, createNodeId }) => {
   const { createNode, createParentChildLink } = actions;
   if (node.internal.type === `Mdx`) {
@@ -133,4 +97,3 @@ exports.onCreateNode = ({ node, getNode, actions, createNodeId }) => {
     }
   }
 };
-```
